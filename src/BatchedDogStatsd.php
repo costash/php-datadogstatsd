@@ -8,6 +8,16 @@ class BatchedDogStatsd extends DogStatsd
     private static $bufferLength = 0;
     public static $maxBufferLength = 50;
 
+
+    public function __construct(array $config = array())
+    {
+      if (!isset($config["disable_telemetry"]))
+      {
+        $config["disable_telemetry"] = false;
+      }
+      parent::__construct($config);
+    }
+
     public function report($udp_message)
     {
         static::$buffer[] = $udp_message;
